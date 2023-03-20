@@ -55,7 +55,10 @@
 
 
 {{ if site.Params.appearance.theme_day }}
-  {{- $scr.Set "primary" ($theme_day.primary | default "#1565c0") -}}
+  {{/* FLIP EDIT: change $theme_day.primary to $theme_day.flip_bg */}} 
+  {{/* ... see fliptheme.toml */}} 
+  {{- $scr.Set "primary" ($theme_day.flip_bg | default "#1565c0") -}}
+  {{/* /FLIP EDIT */}}
 {{ else }}
   {{- $scr.Set "primary" ($theme_night.primary | default "#1565c0") -}}
 {{ end }}

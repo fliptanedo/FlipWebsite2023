@@ -4,6 +4,8 @@ name = "fliptheme"
 [light]
   # Primary
   primary = "#4caf50"
+  flip_bg = "#333333"
+  # ... shows up when you "overscroll"
 
   # Menu
   menu_primary = "#333333"

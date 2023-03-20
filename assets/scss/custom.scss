@@ -26,11 +26,11 @@ USAGE:
 }
 
 #person-email{
-  font-family: 'Titillium Web', sans-serif;
+  font-family: 'Roboto Mono', sans-serif;
 }
 
 .style-email{
-  font-family: 'Titillium Web', sans-serif;
+  font-family: 'Roboto Mono', sans-serif;
 }
 
 .style-widget-title{
@@ -327,9 +327,10 @@ ul.network-icon {
 
 /* NAVBAR OPACITY   */
 /* Opaque navbar using the rgba assignment */
-/* Note: this may all change with bootstrap 4 */
+/* Note: z-index larger than Feynman diagram, just in case */
 .navbar {
   background-color:rgba(0, 0, 0, 0.75) !important;
+  z-index: 301;
 }
 
 @media (max-width: 992px) {
@@ -342,4 +343,12 @@ ul.network-icon {
 // SLIDER
 p.hero-lead{
 filter: brightness(1);
+}
+
+
+/////////////////////
+// 2023 HACKS      //
+/////////////////////
+.powered-by{
+  color: #888888;
 }

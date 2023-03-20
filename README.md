@@ -127,6 +127,15 @@ appearance:
   font_size: L
 ```
 
+One comment on `fliptheme.toml`: I found that the `primary` color is what ends up as the page background color when over-scrolling. (Below this comes up as "fixing the background color"). It turns out that after doing all my other hacks, `primary`  really just sets the over-scroll background color. My 2022 default had this over-scroll as green, which is a bit (unintentionally) bold stylistically. Instead, use `#333333` as a default. I do not think this affects anything else. Links are still in green, `#4caf50`. 
+
+```
+[light]
+  # Primary
+  # primary = "#4caf50"
+  primary = "#333333"
+```
+
 * [Font instructions](https://wowchemy.com/docs/getting-started/customization/#custom-font)
 
 * From [Wowchemy personalization page](https://wowchemy.com/docs/getting-started/customization/#fonts):
@@ -217,7 +226,25 @@ Ok, time to hack  `./layouts/_default/baseof.html`. It's easiest to refer to the
    bottom: 90px;
    ```
 
-6. There's one remaining oddity. 
+6. There's one remaining oddity. The color of the "over scroll". In `fliptheme.toml` the `primary` color sets the "background" of the page. To fix this, go to `fliptheme.toml` and create a new option: 
+   ```
+   [light]
+     # Primary
+     primary = "#4caf50"
+     flip_bg = "#333333"
+     # ... shows up when you "overscroll"
+   ```
+
+   Then go to `./layouts/partials/functions/parse_theme.html` and under `load theme`:
+   ```
+   {{ if site.Params.appearance.theme_day }}
+     {{/* FLIP EDIT: change $theme_day.primary to $theme_day.flip_bg */}} 
+     {{/* ... see fliptheme.toml */}} 
+     {{- $scr.Set "primary" ($theme_day.flip_bg | default "#1565c0") -}}
+     {{/* /FLIP EDIT */}}
+   ```
+
+   
 
 #### Static Folder
 
@@ -313,7 +340,77 @@ Here's a good test for `./content/_index.md`:
 
   
 
+### Navbar
 
+The navbar defaults to a "large" menu. See `./layouts/partials/components/headers/navbar.html`. Changing the `nav` class to `navbar-expand-md` means the "hamburger" only shows up for small screens. 
+
+```
+<header>
+  <!-- FLIP: use navbar-expand-md; could even use navbar-expand-sm if short -->
+  <nav class="navbar navbar-expand-md navbar-light compensate-for-scrollbar" id="navbar-main">
+  <!-- <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main"> -->
+  <!-- /FLIP -->
+```
+
+### Footer
+
+The newest version of Wowchemy allows you to make a custom footer. These are stored in `./layouts/partials/components/footers`. The default footer is `minimal.html`.
+
+Make a copy of `./layouts/partials/components/footers/minimal.html` and call it `flipfoot.html`. Go to `./config/_default/params.yaml` and use `flipfoot` as the block:
+
+```
+footer:
+  block: flipfoot
+  copyright:
+    notice: '© {year} Me. This work is licensed under {license}'
+    license:
+      enable: true
+      allow_derivatives: false
+      share_alike: true
+      allow_commercial: false
+```
+
+Now we can edit `flipfoot.html`.  Here's what I use:
+
+```
+<div class="row" id="footer-columns">
+  <div class="col-md-4" id="footer-col-1">
+    <img src="{{ $.Site.BaseURL }}img/{{ $.Site.Params.mylogo }}" class="center-me">
+  </div>
+  <div class="col-md-4" id="footer-col-1">
+    <!-- <img src="{{ $.Site.BaseURL }}img/{{ $.Site.Params.midlogo }}" class="center-me"> -->
+    {{ with site.Params.footer.text }}
+    <p class="powered-by">
+      {{ . | markdownify | emojify }}
+    </p>
+    {{ end }}
+
+    {{/* Display copyright license. */}}
+    {{ partial "site_footer_license" . }}
+  </div>
+  <div class="col-md-4" id="footer-col-1">
+    <p class="powered-by">
+    {{ with site.Copyright }}{{ replace . "{year}" now.Year | markdownify}}{{ end }}
+
+    {{ if ne .Type "docs" }}
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    {{ end }}
+  </p>
+  </div>
+</div>
+```
+
+Note: the copyright information is split between blocks in `params.yaml` and `config.yaml`. I may want to tweak that in the future so they're both in the same place. 
+
+**Reference**
+
+* [Wowchemy customization: footer](https://wowchemy.com/docs/getting-started/customization/#footer)
 
 # OLD: FLIP IS HERE
 
