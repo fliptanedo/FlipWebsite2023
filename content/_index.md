@@ -12,14 +12,14 @@ sections:
       username: admin
       # Override your bio text from `authors/admin/_index.md`?
       text:
-  - block: markdown
+  - block: fliptemplate
+    id: test
     content:
       title: Test
-      subtitle: ''
-      text: Some test
-        words are
-        spread
-        rambam
+      subtitle: test
+      text: Some test words. Did you know that 
+        you can spread the text out over multiple
+        lines by using tabs?
     design:
-      columns: '1'
+      columns: '2'
 ---

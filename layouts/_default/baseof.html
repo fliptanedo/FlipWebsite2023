@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 {{ "<!-- This site was created with Wowchemy. https://www.wowchemy.com -->" | safeHTML }}
+<!-- FLIP: added a little string in here -->
+{{ "<!-- Flip Tanedo has edited the Wowchemy template.  -->" | safeHTML }}
 {{ printf "<!-- Last Published: %s -->" (now | time.Format ":date_long") | safeHTML }}
 {{- $language_code := site.LanguageCode | default "en-us" -}}
 <html lang="{{$language_code}}" {{ if in site.Data.i18n.rtl.rtl $language_code }}dir="rtl"{{end}}>
@@ -36,6 +38,11 @@
     {{ partial "components/announcement_bar" . }}
   {{ end -}}
 
+  <!-- FLIP: FOR WATERMARK -->
+  <div id="watermark" style="background-image:url('{{ $.Site.BaseURL }}/img/{{ .Site.Params.watermark }}');"></div>
+  <!-- /FLIP --> 
+
+
   <div class="page-header header--fixed">
   {{/* Load header block */}}
   {{ $block_name := .Params.header.navbar.block | default site.Params.header.navbar.block | default "navbar" }}
@@ -45,6 +52,11 @@
   {{ end }}
   {{ partial $block_path . }}
   </div>
+
+<!-- FLIP: opened a new div id="THECONTENT" for framing -->
+<div id="THECONTENT">
+<!-- Closed below; see ./assets/scss/custom.css -->
+<!-- /FLIP -->
 
   <div class="page-body">
     {{/* Breadcrumb */}}
@@ -63,11 +75,27 @@
   <div class="page-footer">
     {{/* Docs and Updates layouts include the site footer in a different location. */}}
     {{ if not (in (slice "book" "docs" "updates") .Type) }}
+  <!-- FLIP -->
+    <div style="position: relative; width: 0; height: 0">
+      <div id="feynmanfoot" style="background-image:url('{{ $.Site.BaseURL }}/img/{{ .Site.Params.footmark }}');"></div>
+    </div>
+    <div id="botbar1"></div>
+    <!-- -- -->
+    <div id="FOOTERBAR"> 
+    <!-- closed after container -->
+<!-- /FLIP -->
     <div class="container">
       {{ partial "site_footer" . }}
     </div>
+<!-- FLIP -->
+    </div> <!-- closes div FOOTERBAR -->
+<!-- /FLIP -->
     {{ end }}
   </div>
+
+<!-- FLIP -->
+</div> <!-- closes id="THECONTENT" -->
+<!-- /FLIP -->
 
   {{ partial "site_js" . }}
 

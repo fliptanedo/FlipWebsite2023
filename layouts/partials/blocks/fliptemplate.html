@@ -1,0 +1,50 @@
+{{/* FLIP: new template block */}}
+{{/* BASED ON: Wowchemy Blocks: Markdown */}}
+{{/* Documentation: https://wowchemy.com/blocks/ */}}
+{{/* License: https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/LICENSE.md */}}
+{{/* FLIP EDITS: the default markdown block template    */}}
+{{/* has no explicit code for the left column.          */}}
+{{/* This code is hidden in pase_block.html and         */}}
+{{/* only accessible to the official blocks.            */}}
+
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+<!-- FLIP: DEFAULT SET TO 2 -->
+{{ $columns := $block.design.columns | default "2" }}
+{{ $text := $block.content.text | emojify | $page.RenderString }}
+
+<!-- FLIP EDIT: COPIED FROM parse_block_v2.html: OPEN DIV 1 -->
+<div class="row  {{if not $block.content.title | or (eq $columns "1") }}justify-content-center{{end}}">
+<!-- /FLIP EDIT -->
+
+{{ if ne $columns "1" }}
+<!-- FLIP EDIT: COPIED FROM parse_block_v2.html -->
+    
+  {{ if $block.content.title }}
+    {{ if eq $columns "1" }}
+      <div class="section-heading col-12 mb-3 text-center">
+        {{ with $block.content.title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+        {{ with $block.content.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+      </div>
+    {{else}}
+      <div class="section-heading col-12 col-lg-4 mb-3 mb-lg-0 d-flex flex-column align-items-center align-items-lg-start">
+        {{ with $block.content.title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+        {{ with $block.content.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+      </div>
+    {{end}}
+  {{end}}
+
+<!-- /FLIP EDIT: COPIED FROM parse_block_v2.html -->
+  <div class="col-12 col-lg-8">
+    {{ $text }}
+  </div>
+{{ else }}
+  <div class="col-12">
+    {{ $text }}
+  </div>
+{{ end }}
+
+<!-- FLIP EDIT: COPIED FROM parse_block_v2.html: CLOSE DIV 1 -->
+</div>
+<!-- /FLIP EDIT -->

@@ -7,6 +7,9 @@ main:
   - name: Home
     url: '#about'
     weight: 10
+  - name: Test
+    url: '#test'
+    weight: 20
 
 
 # Link to a PDF of your resume/CV from the menu.

@@ -69,7 +69,7 @@ features:
   math:
     enable: false
   privacy_pack:
-    enable: true
+    enable: false
   repository:
     url: 'https://github.com/fliptanedo/FlipWebsite2023'
     content_dir: content
