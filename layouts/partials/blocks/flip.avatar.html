@@ -1,0 +1,106 @@
+{{/* Wowchemy Blocks: About - avatar variation */}}
+{{/* Documentation: https://wowchemy.com/blocks/ */}}
+{{/* License: https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/LICENSE.md */}}
+
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+
+{{ $author := "" }}
+{{ if .author }}
+  {{ $author = .author }}
+{{ else }}
+  {{ $author = $block.content.username }}
+{{end}}
+
+{{ $person_page_path := (printf "/authors/%s" $author) }}
+{{ $person_page := site.GetPage $person_page_path }}
+{{ if not $person_page }}
+  {{ errorf "Could not find an author page at `%s`. Please check the value of `author` in your About widget and create an associated author page if one does not already exist. See https://wowchemy.com/docs/page-builder/#about " $person_page_path }}
+{{end}}
+{{ $person := $person_page.Params }}
+{{ $avatar := ($person_page.Resources.ByType "image").GetMatch "*avatar*" }}
+{{ $avatar_shape := site.Params.features.avatar.shape | default "circle" }}
+
+
+
+<!-- FLIP: edited... copied from 2022 version -->
+<!-- somehow copying about.avatar.html gave a weird -->
+<!-- oval-shaped icon -->
+<div id="profile">
+<div class="row">
+
+  <div class="col-12 col-lg-4">
+
+    {{ $avatar_image := $avatar.Fill "270x270 Center" }}
+    <img class="avatar avatar-circle"
+         width="{{ $avatar_image.Width }}" 
+         height="{{ $avatar_image.Height }}"
+         src="{{ $avatar_image.RelPermalink }}" 
+         alt="{{$person_page.Title}}">
+
+    <div class="portrait-title">
+      <h2>{{- $person_page.Title -}}</h2>
+      {{ with $person.role }}<h3>{{ . | markdownify | emojify }}</h3>{{ end }}
+
+      {{ range $person.organizations }}
+      <h3>
+        {{ with .url }}<a href="{{ . }}" target="_blank" rel="noopener">{{ end }}
+        <span>{{ .name }}</span>
+        {{ if .url }}</a>{{ end }}
+      </h3>
+      {{ end }}
+    </div> <!-- close portrait-title -->
+
+
+  </div> <!-- close col-12 col-lg-4 -->
+
+  <div class="col-12 col-lg-8">
+
+    {{ with ($block.content.text | emojify | $page.RenderString) | default $person_page.Content }}
+    <div class="article-style pt-2 d-flex justify-content-left">
+      <div class="bio-text">
+        {{ . }}
+      </div>
+    </div>
+    {{ end }}
+
+    <ul class="network-icon" aria-hidden="true">
+      {{ range $person.social }}
+      {{ $pack := or .icon_pack "fas" }}
+      {{ $pack_prefix := $pack }}
+      {{ if in (slice "fab" "fas" "far" "fal") $pack }}
+        {{ $pack_prefix = "fa" }}
+      {{ end }}
+      {{ $link := .link }}
+      {{ $scheme := (urls.Parse $link).Scheme }}
+      {{ $target := "" }}
+      {{ if not $scheme }}
+        {{ $link = .link | relLangURL }}
+        {{ if eq (path.Ext $link) ".pdf" }}{{ $target = "target=\"_blank\" rel=\"noopener\"" }}{{ end }}
+      {{ else if in (slice "http" "https") $scheme }}
+        {{ $target = "target=\"_blank\" rel=\"noopener\"" }}
+      {{ end }}
+      <li>
+        <a href="{{ $link | safeURL }}" {{ $target | safeHTMLAttr }} aria-label="{{ .icon }}"
+           {{ with .label }} data-toggle="tooltip" data-placement="top" title="{{.}}"{{ end }}>
+          <i class="{{ $pack }} {{ $pack_prefix }}-{{ .icon }} big-icon"></i>
+        </a>
+      </li>
+      {{ end }}
+    </ul>
+
+
+    {{ with ($block.content.blurb | emojify | $page.RenderString) | default $person_page.Content }}
+    <p>
+    <div class="comment" style="text-align: left;">
+        {{ . }}
+    </div>
+    </p>
+    {{ end }}
+
+
+  </div> <!-- close col-12 col-lg-8 -->
+
+</div> <!-- FLIP: CLOSE  "row" -->
+</div> <!-- FLIP: CLOSE  "profile" -->

@@ -217,8 +217,10 @@ footer a#back_to_top i {
   -moz-background-size: cover;
 }
 
+// display: inline-flex;
 ul.network-icon {
-  display: inline-flex;
+  display: flex; 
+  justify-content: left;
   flex-direction: row;
   flex-wrap: wrap;
   list-style: none;

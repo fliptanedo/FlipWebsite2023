@@ -254,7 +254,7 @@ Transfer the `./static` folder. This one has lots of potentially large files. It
 
 Transfer the folders from `./content/post` which contain the pages beyond the front page. I use these "blog posts" for my design portfolio.
 
-# Site Set Up
+# Site Set Up: Layout
 
 Any edits to templates that I make now are edits that I will need to make again in the future when doing my next major update. In order to document this, mark any edits  in templates with comments along the lines of `<!-- FLIP EDIT -->` and `<!-- /FLIP EDIT -->`. For simple edits no need to use the open/close. This makes it easy to search for edits. 
 
@@ -411,6 +411,30 @@ Note: the copyright information is split between blocks in `params.yaml` and `co
 **Reference**
 
 * [Wowchemy customization: footer](https://wowchemy.com/docs/getting-started/customization/#footer)
+
+# Content
+
+## About Block
+
+This one requires quite a bit of work. The default `about.avatar.html`  assumes that you want a one column design. We'll hack pieces of that file into`fliptemplate.html` . Create a new "about" block called `flip.avatar.html` and call it in `_index.md`. 
+
+There are quite a lot of changes, so suffice it to say that I should just copy `flip.avatar.html`. I made some minor edits to `custom.scss` (which should already have copied over). In `_index.md`:
+
+```
+sections:
+  - block: flip.avatar
+    id: about
+    content:
+      username: admin
+      text:
+      blurb: Flip is the first Filipino-American professor of particle physics. He runs a Physical Science book club (Phy-Sci) at his local independent book store. He enjoys swimming, basketball, and speculative fiction.
+```
+
+
+
+## "Sponsors"
+
+
 
 # OLD: FLIP IS HERE
 
