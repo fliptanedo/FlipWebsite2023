@@ -6,6 +6,11 @@
 title: Academic # Website name
 baseURL: 'https://example.com/' # Website URL
 
+title: Flip Tanedo # Website name
+baseurl: 'https://particle.ucr.edu/' # Website URL
+## FLIP: new addition
+copyright: 'Opinions that I express on this site do not represent those of any other groups. Conversely, the policies of my university and funding agencies do not necessarily represent my values. &copy; {year} Philip Tanedo &middot; [Source on GitHub](https://github.com/fliptanedo/tanedo-website-2021).' # Footer text, e.g. '© {year} Me'
+
 ############################
 ## LANGUAGE
 ############################

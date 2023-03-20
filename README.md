@@ -5,35 +5,9 @@ Hosted at  [particle.ucr.edu](https://particle.ucr.edu)
 Flip Tanedo
 March 2023
 
-See `AcademicTheme_README.md` for the Hugo Academic Resumé template information. I periodically re-do my personal website from scratch using the latest Academic template. Most of the material in this document copied from earlier websites. This `README.md` file is a personal reminder of how I edited the page. 
+See `AcademicTheme_README.md` for the Wowchemy Academic Resumé template information. Please consider [sponsoring the creator](https://github.com/sponsors/gcushen) if you use Wowchemy. I periodically re-do my personal website from scratch using the latest Academic template. Most of the material in this document copied from earlier websites. This `README.md` file is a personal reminder of how I edited the page. 
 
-Old versions: [2021](https://github.com/fliptanedo/tanedo-website-2021/blob/master/README.md) | [2020](https://github.com/fliptanedo/flip-www-2020).
-
-## Useful References
-
-* The [Hugo Directory Structure](https://gohugo.io/getting-started/directory-structure/) 
-
-  * All paths are relative to the project root
-
-* [Extending Wowchemy](https://wowchemy.com/docs/hugo-tutorials/extending-wowchemy/)
-
-  ```
-  To override a template in the theme, you simply copy the file you are interested in from the version of the Wowchemy module your site uses and paste it in your site folder using a similar path. To choose your version, select its tag from GitHub’s dropdown master box on the upper left and press enter.
-  ```
-
-* [TOML vs YAML formatting for markdown files](https://gohugo.io/content-management/front-matter/)
-
-* [Wowchemy Page Builder](https://wowchemy.com/docs/getting-started/page-builder/)
-
-* [Wowchemy theme customization](https://wowchemy.com/docs/getting-started/customization/#custom-theme)
-
-* [Convert TOML to YAML](https://www.convertsimple.com/convert-toml-to-yaml/)
-
-## Notes for next time
-
-* The default widget template is `demo-links.md`. This is written in TOML, while the other widgets are in YAML. It may be nice to convert them all to YAML. The difference is the format of the [header material](https://gohugo.io/content-management/front-matter/). [Conversion tool](https://www.convertsimple.com/convert-toml-to-yaml/).
-* I may want to properly upgrade my custom css to [scss](https://www.geeksforgeeks.org/what-is-the-difference-between-css-and-scss/).
-* Teaching section should have an "old classes" part. Currently the number of icons is getting a bit long. Would like a short list of older classes that doesn't take up much room. Could even use a bit of Bootstrap CSS to make it a two column list. 
+Old versions:  [2022](https://github.com/fliptanedo/FlipWebsite2022/blob/main/README.md) | [2021](https://github.com/fliptanedo/tanedo-website-2021/blob/master/README.md) | [2020](https://github.com/fliptanedo/flip-www-2020)
 
 ## Quick Start from Scratch
 
@@ -51,82 +25,71 @@ I do not use the Netlify-based default deployment.
 
    The output will include a URL: `Web Server is available at //localhost:1313/`, navigate your browser to this URL to view the page.
 
-### If there's an error... 
+5. Copy over `.gitignore` from the previous version. Start a new `README.md` file (I save the Wowchemy readme as a different filename). Push to GitHub.
 
-I end up getting the following error: 
+6. Clean up/back up the default Wowchemy page. 
 
-```
-Error: failed to download modules: exec: "go": executable file not found in $PATH
-```
+   1. Make a backup copy of `./content/_index.md` ; this controls the home page widgets.
+   2. Go ahead and delete most of the sections other than the first `about.avatar`. For reference, the `markdown` block is the default no-frills block. 
+   3. Remove the extraneous items in `./config/_default/menus.yaml`
+   4. `/config/_default/params.yaml`
+      1. `# SEO`: empty out everything
+      2. `# Site header`: align right, turn off day/night, search
+      3. `# site features`: 
+      4. Copy over `## ADDED BY FLIP` parameters from 2022 page
+   5. `./config/config.yaml`: copy over modifications from 2022 page
 
-This means we have to [install some Go dependences](https://wowchemy.com/docs/getting-started/install-hugo-extended/):
+7. Update `./content/authors/admin/_index.md` ; copy from 2022 page. Copy `avatar.jpg` from here too. 
 
-```
-brew install git golang hugo
-```
 
-Then open `~/.zshrc` and add the following line
+## Useful References
 
-``` 
-export PATH=$PATH:/usr/local/go/bin
-```
+* The [Hugo Directory Structure](https://gohugo.io/getting-started/directory-structure/): All paths are relative to the project root
 
-You have to restart the Terminal app.
+* [Extending Wowchemy](https://wowchemy.com/docs/hugo-tutorials/extending-wowchemy/)
 
-## Notes from last time 
+  ```
+  To override a template in the theme, you simply copy the file you are interested in from the version of the Wowchemy module your site uses and paste it in your site folder using a similar path. To choose your version, select its tag from GitHub’s dropdown master box on the upper left and press enter.
+  ```
 
+* [TOML vs YAML formatting for markdown files](https://gohugo.io/content-management/front-matter/) | [Convert TOML to YAML](https://www.convertsimple.com/convert-toml-to-yaml/)
+
+* [Wowchemy Page Builder](https://wowchemy.com/docs/getting-started/page-builder/)
+
+* [Wowchemy theme customization](https://wowchemy.com/docs/getting-started/customization/#custom-theme)
+
+## What's changed since 2022?
+
+All home page widget data is now in `./content/_index.md`. This simplifies a few things and complicates a few others. More information on [Wowchemy: Version 2 Blocks](https://wowchemy.com/blocks/) and [Wowchemy: Page Builder](https://wowchemy.com/docs/getting-started/page-builder/).
+
+## Notes from 2022 for 2023
+
+* The default widget template is `demo-links.md`. This is written in TOML, while the other widgets are in YAML. It may be nice to convert them all to YAML. The difference is the format of the [header material](https://gohugo.io/content-management/front-matter/). [Conversion tool](https://www.convertsimple.com/convert-toml-to-yaml/).
+* I may want to properly upgrade my custom css to [scss](https://www.geeksforgeeks.org/what-is-the-difference-between-css-and-scss/).
+* Teaching section should have an "old classes" part. Currently the number of icons is getting a bit long. Would like a short list of older classes that doesn't take up much room. Could even use a bit of Bootstrap CSS to make it a two column list. 
 * I backed up some old sites in `./static/archived/`. These show up under `./archived/` when uploaded. Should I link to them? These archived sites are a huge pain. They take up a large amount of space. I think it's from the saved pdfs of talks. I think there should be a better way of archiving these in the future.
 * There are a bunch of image files that are much larger than they need to be. The media folder is around 50 mb. I should make small versions of the images.
 
 
-## Transferring assets
+## Transferring Assets
 
-All paths in this document are relative to the project root, `FlipWebsite2022/` 
+All paths in this document are relative to the project root, `FlipWebsite2023/` 
 
-### Background 
+### Setting up layouts
 
-All paths are supposed to be relative to the project root. We want to create a `./layouts/` folder and so that Hugo will look here for templates and shortcodes first. This over-rides any files from the theme. Last time, this did not quite work, see [Modifying Modules](https://gohugo.io/hugo-modules/use-modules/#make-and-test-changes-in-a-module). It seems, though, that this is now fixed. 
+Pages in are rendered according to html layout files. My site uses layout files based on the Wowchemy defaults.
 
-... except for the fact that the [path to the homepage template html files](https://github.com/wowchemy/wowchemy-hugo-themes/tree/main/modules/wowchemy/layouts/partials/blocks) has changed. 
+1. Download the [`wowchemy-hugo-themes`](https://github.com/wowchemy/wowchemy-hugo-themes) repository from [Wowchemy](https://github.com/wowchemy/wowchemy-hugo-themes/tree/main/modules/wowchemy). This is the latest "clean" version of Wowchemy. Copy `[downloadfolder]wowchemy-hugo-themes-main/modules/wowchemy/layouts/` to my project folder as `./layouts_templates`. 
+2. Make a copy of `./layouts_templates` and call it `./layouts`. Hugo prioritizes the html files in `./layouts`  when formatting pages. **Note**: you may also choose to leave `./layouts` empty and then copy over files one at a time as you edit them.
 
-### Default layout templates
+Relevant References: 
 
-I believe the [wowchemy-hugo-themes/modules/wowchemy](https://github.com/wowchemy/wowchemy-hugo-themes/tree/main/modules/wowchemy) repository is the one we want.
+* [Modifying Modules](https://gohugo.io/hugo-modules/use-modules/#make-and-test-changes-in-a-module)
+* [Path to the homepage template html files](https://github.com/wowchemy/wowchemy-hugo-themes/tree/main/modules/wowchemy/layouts/partials/blocks) 
 
-* Download the [`wowchemy-hugo-themes`](https://github.com/wowchemy/wowchemy-hugo-themes)
-* Copy `[downloadfolder]wowchemy-hugo-themes-main/modules/wowchemy/layouts/` somewhere for the pristine version of the default layouts.  I went ahead and saved it as `./layouts_templates` in my project root folder. That way I can copyu from the `./layouts_templates` folder into my `layouts` folder as I tweak things. 
+### Copying Over Old Content
 
-### Possible issue with `.Path`. 
-
-There's a bigger issue with my 2021 layout files.
-
-```
-WARN 2022/10/09 11:50:43 .Path when the page is backed by a file is deprecated and will be removed in a future release. We plan to use Path for a canonical source path and you probably want to check the source is a file. To get the current behaviour, you can use a construct similar to the one below:
-  {{ $path := "" }}
-  {{ with .File }}
-	{{ $path = .Path }}
-  {{ else }}
-	{{ $path = .Path }}
-  {{ end }}
-```
-
-Discussed [here](https://discourse.gohugo.io/t/path-when-the-page-is-backed-by-a-file-is-deprecated/36842/6) and [here (wowchemy)](https://github.com/wowchemy/wowchemy-hugo-themes/issues/2592). Looks like the offending piece is my `widget_page.html` hack, since that's the page that contains calls to `.Path`. 
-
-Ugh, ok, this is going to be a much more delicate update
-
-### Pre-Transfer
-
-In order to save the default widgets, I copied the `./content/home` folder into `./content/home_copy` . 
-
-* I guess you do not actually have to do this. You could also deactivate the default widgets using: `active = false`. 
-
-Now try it out. Run `hugo server -D` in the terminal of the project directory and navigate to the locally-hosted draft site. Then delete the `./content/demo_hero.md` file and see that the website has updated by removing the stupid advertisement for the Academic theme.
-
-Go ahead and delete most of the `./content/home ` widgets. I just kept the `about`, `gallery`, and `index` widgets in `./content/home/`. 
-
-### Basic Customization
-
-* To personalize Wowchemy, you can **choose a colour theme and font set** in `config/_default/params.yaml`. [[source](https://wowchemy.com/docs/hugo-tutorials/extending-wowchemy/)]
+Unlike the 2022 version, Wowchemy no longer uses `./content/home`  for individual markdown files for each home page widget. Instead, all of this information goes into `./content/_index.md`. I copied over the old `./content/home` directory into `./content/home_OLD` for easy copy and pasting.
 
 ### Transferring Assets
 
@@ -152,15 +115,31 @@ Copy `./data/fonts/flipfont.toml`
 
 Copy `./data/themes/fliptheme.toml`
 
+To personalize Wowchemy, you can **choose a colour theme and font set** in `config/_default/params.yaml`. [[source](https://wowchemy.com/docs/hugo-tutorials/extending-wowchemy/)]
+
+```
+appearance:
+  # theme_day: minimal
+  # theme_night: minimal
+  theme_day: fliptheme
+  font: flipfont
+  # font: minimal
+  font_size: L
+```
+
+
+
 #### Static Folder
 
 Transfer the `./static` folder. This one has lots of potentially large files. It is a good time to do housekeeping to remove anything that is no longer being used. 
 
-**Remark:** the archived sites should not be in `./static` . There needs to be a better way to archive them elsewhere. 
-
 #### Content
 
 Transfer the folders from `./content/post` which contain the pages beyond the front page. I use these "blog posts" for my design portfolio.
+
+# OLD FLIP IS HERE
+
+
 
 ### Personal information
 
