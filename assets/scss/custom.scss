@@ -354,3 +354,14 @@ filter: brightness(1);
 .powered-by{
   color: #888888;
 }
+
+.btn-primary, .btn-xs{
+  color: #4caf50 !important;
+  border-color: #4caf50 !important;
+}
+
+.btn-primary:hover, .btn-xs:hover{
+  color: #ffffff !important;
+  background-color: #4caf50 !important;
+}
+

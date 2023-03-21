@@ -414,6 +414,8 @@ Note: the copyright information is split between blocks in `params.yaml` and `co
 
 # Content
 
+We'll go down the list of homepage blocks. It is not worth describing the custom block modifications. These are all based on `flip.template.html` (to have the nice two column layout). I suggest going over the existing blocks and seeing how they are modified. I did not bother indicating where the edits are: they are all over the place and should be straightforward to follow.
+
 ## About Block
 
 This one requires quite a bit of work. The default `about.avatar.html`  assumes that you want a one column design. We'll hack pieces of that file into`fliptemplate.html` . Create a new "about" block called `flip.avatar.html` and call it in `_index.md`. 
@@ -429,6 +431,20 @@ sections:
       text:
       blurb: Flip is the first Filipino-American professor of particle physics. He runs a Physical Science book club (Phy-Sci) at his local independent book store. He enjoys swimming, basketball, and speculative fiction.
 ```
+
+## CV
+
+This is another one where one should just copy the `flip.cv.html` template. Note that the filenames should be in pure lowercase. 
+
+The CV block is a nice demonstration for how to iterate over lists and sub-lists. Some care is necessary since Hugo is reading `_index.md` as a yaml file. You can use the `{{ . | markdownify }}` construction to apply markdown to an item, for example `{{ .thing | markdownify }}`. However, the `thing` cannot start out with markdown or else Hugo will get confused. Instead, you can use a single quote:
+
+```
+service:
+      - thing: Website Committee (chair)
+      - thing: '[hyperlink](https://www.google.com)'
+```
+
+
 
 
 
