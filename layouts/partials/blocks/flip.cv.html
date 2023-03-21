@@ -1,0 +1,101 @@
+{{/* FLIP: new template block */}}
+{{/* BASED ON: Wowchemy Blocks: Markdown */}}
+{{/* Documentation: https://wowchemy.com/blocks/ */}}
+{{/* License: https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/LICENSE.md */}}
+{{/* FLIP EDITS: the default markdown block template    */}}
+{{/* has no explicit code for the left column.          */}}
+{{/* This code is hidden in pase_block.html and         */}}
+{{/* only accessible to the official blocks.            */}}
+
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $columns := $block.design.columns | default "2" }}
+{{ $text := $block.content.text | emojify | $page.RenderString }}
+
+<div class="row  {{if not $block.content.title | or (eq $columns "1") }}justify-content-center{{end}}">
+    
+  <div class="section-heading col-12 col-lg-4 mb-3 mb-lg-0 d-flex flex-column align-items-center align-items-lg-start">
+    {{ with $block.content.title }}<h2 class="mb-0">{{ . | markdownify | emojify }}</h2>{{ end }}
+    {{ with $block.content.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+    <p>
+      <a class="btn btn-outline-primary btn-xs" href="{{ $block.Params.cv_pdf }}">
+        Download Complete CV
+      </a>
+    </p>
+    {{ if $block.content.group_logo }}
+      <p>
+        <img class="sidebarpic" src="{{ $block.content.group_logo }}">
+        <meta itemprop="image" content="{{ $block.content.group_logo }}">
+      </p>
+    {{ end }}
+  </div>
+
+  <div class="col-12 col-lg-8">
+    {{ $text }}
+
+    <p>
+      {{ with $block }}
+          <ul>
+            {{ range .awards }}
+              <li>
+                {{ if .link }}<a href="{{ .link }}">{{ end }}
+                {{ .thing | markdownify }}{{ if .link }}</a>{{ end }}, 
+                {{ .dates | markdownify }} 
+              </li>
+            {{ end }}
+          </ul>
+      {{ end }}
+    </p>
+
+    <div class="row">
+
+      {{ with $block }}
+      <div class="col-md-5">
+        <h3>{{ i18n "interests" | markdownify }}</h3>
+        <!-- <ul class="ul-interests"> -->
+          {{ range .interests }}
+          <!-- <li> -->
+            {{ .interest | markdownify }}
+            <br />
+        <!-- </li> -->
+          {{ end }}
+        <!-- </ul> -->
+      </div>
+      {{ end }}
+
+      {{ with $block }}
+      <div class="col-md-7">
+        <h3>{{ i18n "education" | markdownify }}</h3>
+          {{ range .education }}
+            {{ if .logo }}
+              <img src="{{ $.Site.BaseURL }}img/{{ .logo }}" style="height:1rem; float: left; padding-right: 10px;">
+            {{ else }}
+              <i class="fa-li fas fa-graduation-cap"></i>
+            {{ end }}
+            <!-- <div class="description"> -->
+              {{ .course_short }}
+              {{ with .institution_short }}, {{ . }}{{ end }}
+              {{ with .year }}({{ . }}){{ end }}
+              <br />
+            <!-- </div> -->
+          {{ end }}
+      </div>
+      {{ end }}
+
+    </div> <!-- close row -->
+
+    <br />
+    {{ with $block }}
+      <p style="font-size: .8rem;">
+        <b>Service</b>:
+        {{ range .service }}
+        {{ .thing | markdownify }} &middot;
+        {{ end }}
+      </p>
+    {{ end }}
+
+  </div> <!-- close col-12 col-lg-8 -->
+
+
+</div> <!-- close row -->
