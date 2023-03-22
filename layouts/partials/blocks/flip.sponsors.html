@@ -1,0 +1,43 @@
+{{/* FLIP: new template block */}}
+{{/* BASED ON: Wowchemy Blocks: Markdown */}}
+{{/* FLIP: use this for making new 2-col blocks */}}
+{{/* Documentation: https://wowchemy.com/blocks/ */}}
+{{/* License: https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/LICENSE.md */}}
+{{/* FLIP EDITS: the default markdown block template    */}}
+{{/* has no explicit code for the left column.          */}}
+{{/* This code is hidden in pase_block.html and         */}}
+{{/* only accessible to the official blocks.            */}}
+
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $columns := $block.design.columns | default "1" }}
+{{ $text := $block.content.text | emojify | $page.RenderString }}
+
+<!-- FLIP EDIT: COPIED FROM parse_block_v2.html: OPEN DIV 1 -->
+<div class="row  {{if not $block.content.title | or (eq $columns "1") }}justify-content-center{{end}}">
+<!-- /FLIP EDIT -->
+
+<div class="col-12">
+  {{ $text }}
+  <img src="{{ $.Site.BaseURL }}img/logo/{{ $block.departmentlogo }}" style="width: 80vw;"><br />
+
+  {{ $block.sponsorintro }}
+  {{ with $block.sponsors }}
+    <ul class="ul-sponsors">
+      {{ range $block.sponsors }}
+        <li class="ul-students">
+          <!-- {{ .sponsor | markdownify}} -->
+          <!-- <img src="{{ $.Site.BaseURL }}img/logo/{{ .logo }}"> -->
+          <img src="{{ $.Site.BaseURL }}img/logo/{{ .logo }}" style="width: {{ div .logowidth $block.sponsorwidth }}vw;">
+          <!-- {{ div .logowidth $block.sponsorwidth }} -->
+          <!-- {{ $block.sponsorwidth | markdownify}} -->
+        </li>
+      {{ end }}
+    </ul>
+  {{ end }}
+</div>
+
+<!-- FLIP EDIT: COPIED FROM parse_block_v2.html: CLOSE DIV 1 -->
+</div>
+<!-- /FLIP EDIT -->

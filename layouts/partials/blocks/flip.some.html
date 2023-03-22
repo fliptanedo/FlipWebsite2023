@@ -19,8 +19,6 @@
 <div class="row  {{if not $block.content.title | or (eq $columns "1") }}justify-content-center{{end}}">
 <!-- /FLIP EDIT -->
 
-{{ if ne $columns "1" }}
-<!-- FLIP EDIT: COPIED FROM parse_block_v2.html -->
     
   {{ if $block.content.title }}
     {{ if eq $columns "1" }}
@@ -39,12 +37,23 @@
 <!-- /FLIP EDIT: COPIED FROM parse_block_v2.html -->
   <div class="col-12 col-lg-8">
     {{ $text }}
+    <h4>Recent Press</h4>
+    {{ if $block.content.currentpress }}
+    <div>
+      {{ $block.content.currentpress | markdownify }}
+    </div>
+    {{ end }}
+
+    {{ if $block.content.olderpress }}
+    <details>
+      <summary><b>Older Press</b></summary>
+      <div>
+        {{ $block.content.olderpress | markdownify }}
+      </div>
+      {{ end }}
+    </details>
   </div>
-{{ else }}
-  <div class="col-12">
-    {{ $text }}
-  </div>
-{{ end }}
+
 
 <!-- FLIP EDIT: COPIED FROM parse_block_v2.html: CLOSE DIV 1 -->
 </div>

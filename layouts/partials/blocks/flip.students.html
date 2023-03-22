@@ -1,0 +1,77 @@
+{{/* FLIP: STUDENTS */}}
+{{/* BASED ON: Wowchemy Blocks: Markdown */}}
+{{/* Documentation: https://wowchemy.com/blocks/ */}}
+{{/* License: https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/LICENSE.md */}}
+{{/* FLIP EDITS: the default markdown block template    */}}
+{{/* has no explicit code for the left column.          */}}
+{{/* This code is hidden in pase_block.html and         */}}
+{{/* only accessible to the official blocks.            */}}
+
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+<!-- FLIP: DEFAULT SET TO 2 -->
+{{ $columns := $block.design.columns | default "2" }}
+{{ $text := $block.content.text | emojify | $page.RenderString }}
+
+<!-- FLIP EDIT: COPIED FROM parse_block_v2.html: OPEN DIV 1 -->
+<div class="row  {{if not $block.content.title | or (eq $columns "1") }}justify-content-center{{end}}">
+<!-- /FLIP EDIT -->
+
+{{ if $block.content.title }}
+  {{ if eq $columns "1" }}
+    <div class="section-heading col-12 mb-3 text-center">
+      {{ with $block.content.title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+      {{ with $block.content.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+    </div>
+  {{else}}
+    <div class="section-heading col-12 col-lg-4 mb-3 mb-lg-0 d-flex flex-column align-items-center align-items-lg-start">
+      {{ with $block.content.title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+      {{ with $block.content.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+    </div>
+  {{end}}
+{{end}}
+
+<div class="col-12 col-lg-8">
+  {{ $text }}
+
+  {{ with $block.mygroup }}
+    <ul class="ul-students">
+      {{ range .students }}
+        <li class="ul-students" title="{{ .name }}">
+          <a href="{{ .website }}"><img class="studentpic" src="{{ $.Site.BaseURL }}img/students/{{ .photo }}"></a>
+        </li>
+      {{ end }}
+    </ul>
+  {{ end }}
+
+  <p><span class="comment">* - co-advised,  ◊ - postdoc, † - undergraduate, ‡ - high-school, § - visiting</span></p>
+
+
+  <div class="row comment">
+    <h5>Past Students</h5>
+  </div>
+
+  {{ with $block.mygroup }}
+    {{ range .oldstudents }}
+      <div class="row comment">
+        <div class="col-xs-3">
+          <a href="{{ .website }}" class=comment>
+            {{ .name }}&nbsp;
+          </a>
+        </div>
+        <div class="col-xs-3">
+          {{ .start }} - {{ .end }}&nbsp;
+        </div>
+        <div class="col-xs-6">
+          {{ .position }}, {{ .role }}
+        </div>
+      </div>
+    {{ end }}
+  {{ end }}
+
+</div>
+
+<!-- FLIP EDIT: COPIED FROM parse_block_v2.html: CLOSE DIV 1 -->
+</div>
+<!-- /FLIP EDIT -->

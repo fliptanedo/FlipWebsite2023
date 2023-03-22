@@ -121,10 +121,6 @@ security:
 
 ## ADDED BY FLIP
 
-email1: flip.tanedo # using cryptedmail
-email2: ucr # using cryptedmail
-email3: edu # using cryptedmail
-
 # Feynman Diagram Footer
 footmark: 'layout/feynmanfooter.png'
 

@@ -7,9 +7,28 @@ main:
   - name: Home
     url: '#about'
     weight: 10
-  - name: Test
-    url: '#test'
+  - name: CV
+    url: '#CV'
     weight: 20
+  - name: Research
+    url: '#research'
+    weight: 30
+  - name: Teaching
+    url: '#teaching'
+    weight: 40
+  - name: Team
+    url: '#students'
+    weight: 50
+  - name: Public
+    url: '#public'
+    weight: 60
+  - name: Design
+    url: '#design'
+    weight: 70
+  - name: Contact
+    url: '#contact'
+    weight: 80
+
 
 
 # Link to a PDF of your resume/CV from the menu.

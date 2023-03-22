@@ -1,0 +1,156 @@
+{{/* FLIP: new contact block */}}
+{{/* BASED ON: Wowchemy Blocks: Markdown, contact */}}
+{{/* FLIP: use this for making new 2-col blocks */}}
+{{/* Documentation: https://wowchemy.com/blocks/ */}}
+{{/* License: https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/LICENSE.md */}}
+
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $columns := $block.design.columns | default "2" }}
+{{ $text := $block.content.text | emojify | $page.RenderString }}
+{{ $autolink := default true $block.content.autolink }}
+{{ $data := $block.content }}
+
+<div class="row">
+
+    
+  <div class="section-heading col-12 col-lg-4 mb-3 mb-lg-0 d-flex flex-column align-items-center align-items-lg-start">
+    {{ with $block.content.title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+    {{ with $block.content.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+  </div>
+
+
+  <div class="col-12 col-lg-8">
+    {{ $text }}
+
+    <ul class="fa-ul">
+
+    {{ if $data.email }}
+    <li>
+      <i class="fa-li fas fa-envelope fa-sm" aria-hidden="true" ></i>
+      <span id="person-email">
+      {{- if $autolink }}<a href="mailto:{{ $data.email }}">{{ $data.email }}</a>{{ else }}{{ $data.email }}{{ end -}}
+      </span>
+    </li>
+    {{ end }}
+
+    {{ with $data.email1 }}
+      <li>
+        <i class="fa-li fas fa-envelope fa-sm" aria-hidden="true" ></i>
+        <span id="person-email" itemprop="email">
+          <a 
+            data-name="{{ $data.email1 }}" 
+            data-domain="{{ $data.email2 }}" 
+            data-tld="{{ $data.email3 }}" 
+            href="#" 
+            class="cryptedmail" 
+            onclick="window.location.href = 'mailto:' + this.dataset.name + '@' + this.dataset.domain + '.' + this.dataset.tld"></a>
+        </span>
+      </li>
+    {{ end }}
+
+    {{ with $data.phone }}
+    <li>
+      <i class="fa-li fas fa-phone fa-sm" aria-hidden="true"></i>
+      <span id="person-telephone">
+      {{- if $autolink }}<a href="tel:{{ . }}">{{ . }}</a>{{ else }}{{ . }}{{ end -}}
+      </span>
+    </li>
+    {{ end }}
+
+    {{ $addr_formatted := "" }}{{/* Scoping for maps. */}}
+    {{ if $data.address.street | or $data.address.city | or $data.address.region | or $data.address.postcode | or $data.address.country }}
+      {{ $addr_formatted = partial "functions/get_address" (dict "root" . "address" $data.address) }}
+      <li>
+        <i class="fa-li fas fa-map-marker fa-sm" aria-hidden="true"></i>
+        <span id="person-address">{{$addr_formatted}}</span>
+      </li>
+    {{ end }}
+
+    {{ with $data.directions }}
+    <li>
+      <i class="fa-li fas fa-compass fa-sm" aria-hidden="true"></i>
+      <span>{{ . | markdownify | emojify }}</span>
+    </li>
+    {{ end }}
+
+    {{ with $data.office_hours }}
+    <li>
+      <i class="fa-li fas fa-clock fa-sm" aria-hidden="true"></i>
+      <span>
+        {{- if not (reflect.IsSlice .)}}{{/* Support legacy string format. */}}
+          {{- . | markdownify | emojify -}}
+        {{else}}
+          {{- delimit . "<br>" | markdownify | emojify -}}
+        {{end -}}
+      </span>
+    </li>
+    {{ end }}
+
+    {{ with $data.appointment_blurb }}
+    <li>
+      <i class="fa-li fas fa-calendar-check fa-sm" aria-hidden="true"></i>
+      {{ $data.appointment_blurb | markdownify }} 
+      {{ with $data.appointment_blurb2 }}
+      <br />
+      <div class="comment">
+      {{ $data.appointment_blurb2 | markdownify}}
+      </div>
+      {{ end }}
+    </li>
+    {{ end }}
+
+    {{ with $data.appointment_url }}
+    <li>
+      <i class="fa-li fas fa-calendar-check fa-sm" aria-hidden="true"></i>
+      <a href="{{ . }}" target="_blank" rel="noopener">{{ i18n "book_appointment" | default "Book an appointment" }}</a>
+    </li>
+    {{ end }}
+
+    <!--  -->
+
+    {{/* Contact links. */}}
+    {{ range $data.contact_links }}
+    {{ $pack := or .icon_pack "fas" }}
+    {{ $pack_prefix := $pack }}
+    {{ if in (slice "fab" "fas" "far" "fal") $pack }}
+      {{ $pack_prefix = "fa" }}
+    {{ end }}
+    {{ $link := .link }}
+    {{ $scheme := (urls.Parse $link).Scheme }}
+    {{ $target := "" }}
+    {{ if not $scheme }}
+      {{ $link = .link | relLangURL }}
+    {{ else if in (slice "http" "https") $scheme }}
+      {{ $target = "target=\"_blank\" rel=\"noopener\"" }}
+    {{ end }}
+    <li>
+      <i class="fa-li {{ $pack }} {{ $pack_prefix }}-{{ .icon }} fa-sm" aria-hidden="true"></i>
+      <a href="{{ $link | safeURL }}" {{ $target | safeHTMLAttr }}>{{.name|markdownify|emojify|safeHTML}}</a>
+    </li>
+    {{ end }}
+
+    </ul>
+
+    {{ if and site.Params.features.map.provider $data.coordinates.latitude }}
+    <div class="d-none">
+      <input id="map-provider" value="{{ lower site.Params.features.map.provider }}">
+      <input id="map-lat" value="{{ $data.coordinates.latitude }}">
+      <input id="map-lng" value="{{ $data.coordinates.longitude }}">
+      <input id="map-dir" value="{{ $addr_formatted }}">
+      <input id="map-zoom" value="{{ site.Params.features.map.zoom | default "15" }}">
+      <input id="map-api-key" value="{{ site.Params.features.map.api_key }}">
+    </div>
+    <div id="map"></div>
+    {{ end }}
+
+
+
+  </div>
+
+
+
+
+
+</div> <!-- close row -->

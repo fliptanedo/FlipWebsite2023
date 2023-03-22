@@ -70,6 +70,31 @@ All home page widget data is now in `./content/_index.md`. This simplifies a few
 * I backed up some old sites in `./static/archived/`. These show up under `./archived/` when uploaded. Should I link to them? These archived sites are a huge pain. They take up a large amount of space. I think it's from the saved pdfs of talks. I think there should be a better way of archiving these in the future.
 * There are a bunch of image files that are much larger than they need to be. The media folder is around 50 mb. I should make small versions of the images.
 
+## Notes for 2024
+
+* The hero block may be a nice way to put in the top watermark without having to hack the `baseof` template. Try this in `_index.md`:
+  ```
+  - block: hero
+      id: test 
+      content: 
+        title: hi
+        image:
+          filename: hero-academic.png
+  ```
+
+  This gives a slight white "watermark". See these [instructions for section background](https://wowchemy.com/docs/getting-started/page-builder/#background).
+
+* As I start writing up separate pages, I may want to work out a better file system for `./content/`. Most of my independent pages show up in `./content/posts/` and are otherwise unsorted. They get called by, for example:
+  ```
+  {{ $.Site.BaseURL }}img/portfolio/{{ .photo }}
+  ```
+
+  (from my design portfolio). =
+
+* 
+
+
+
 
 ## Transferring Assets
 
@@ -81,6 +106,8 @@ Pages in are rendered according to html layout files. My site uses layout files 
 
 1. Download the [`wowchemy-hugo-themes`](https://github.com/wowchemy/wowchemy-hugo-themes) repository from [Wowchemy](https://github.com/wowchemy/wowchemy-hugo-themes/tree/main/modules/wowchemy). This is the latest "clean" version of Wowchemy. Copy `[downloadfolder]wowchemy-hugo-themes-main/modules/wowchemy/layouts/` to my project folder as `./layouts_templates`. 
 2. Make a copy of `./layouts_templates` and call it `./layouts`. Hugo prioritizes the html files in `./layouts`  when formatting pages. **Note**: you may also choose to leave `./layouts` empty and then copy over files one at a time as you edit them.
+
+Useful pro tip: `[downloadfolder]wowchemy-hugo-themes-main/modules/wowchemy/assets/scss/wowchemy` has all of the Wowchemy `scss` settings. That can help with tweaking things in `custom.scss`.
 
 Relevant References: 
 
@@ -108,6 +135,10 @@ We just copy over the folder from `./assets/` in the 2021 version.
 1. Transfer over the favicon, `./assets/media/icon.png`. [[source](https://wowchemy.com/docs/getting-started/customization/#website-icon)]
 2. Transfer over the `./assets/photos/` folder. This is a good time to make sure none of the files are too big. 
 3. Transfer over the `./assets/research/` folder. This is a good time to make sure none of the files are too big. 
+
+### Shorcodes
+
+Copy the files from `./layouts/shortcodes/`: `twitter.html` and `flipemail.html`
 
 #### Fonts and color theme
 
@@ -334,6 +365,8 @@ Here's a good test for `./content/_index.md`:
       columns: '2'
 ```
 
+**Protip**: I made two copies of my template. The first one has comments that annotates how I changed `markdown.html` . This version is for the *next* time I revamp my site. The second one has all comments stripped and is what I'll duplicate when making custom templates. That all comments will be about the customization relative to my template, not my template relative to `markdown`. I call the second version `fliptemplate.svelete`.
+
 **References**:
 
 * Information about editing the [Wowchemy blocks](https://wowchemy.com/blocks/).
@@ -416,6 +449,8 @@ Note: the copyright information is split between blocks in `params.yaml` and `co
 
 We'll go down the list of homepage blocks. It is not worth describing the custom block modifications. These are all based on `flip.template.html` (to have the nice two column layout). I suggest going over the existing blocks and seeing how they are modified. I did not bother indicating where the edits are: they are all over the place and should be straightforward to follow.
 
+Everything is updated in `_index.md` and with the menu updated in `menu.yaml`. In `_index.md` it is useful to know that `|-` means "markdown follows in the following line."
+
 ## About Block
 
 This one requires quite a bit of work. The default `about.avatar.html`  assumes that you want a one column design. We'll hack pieces of that file into`fliptemplate.html` . Create a new "about" block called `flip.avatar.html` and call it in `_index.md`. 
@@ -446,11 +481,200 @@ service:
 
 
 
+## Slider (Carousel)
+
+The slider/image carousel is tricky. At the time of this writing, the slider had not yet been ported to a v2 template, though GitHub user Agos95 [has a fix](https://github.com/wowchemy/wowchemy-hugo-themes/blob/3b417723f711d3fbb9392f5613fc7b91bebd53db/modules/wowchemy/layouts/partials/blocks/slider.html). It seems to work, so I advocate just grabbing it and placing it in `./layouts/partials/blocks/`.
+
+Note: it is important that the slider template is called `slider.html`. Any other name (e.g. `flip.slider.html`) will not work because bits of code (e.g. `parse_block_v2.html`) specifically have `if` statements based on whether the  block is *exactly* `slider`.  See `parse_block_v2.html`:
+
+```
+{{/* Special case: Slider widget. */}}
+{{ if in (slice "slider") $block_type }}
+  {{ $css_classes = print $css_classes " carousel slide" }}
+  {{ $extra_attributes = printf "data-ride=\"carousel\" data-interval=\"%s\"" (cond ($block.design.loop | default true) (string $block.design.interval | default "3000") "false") }}
+  {{ $use_container = false }}
+{{ end }}
+
+```
+
+Trying to recreate the slider block is a pain because it is hard to get the new block to span the entire width and height of a block... not to mention the bigger issue that the navigation does not work.
+
+1. Download [this file](https://github.com/wowchemy/wowchemy-hugo-themes/blob/3b417723f711d3fbb9392f5613fc7b91bebd53db/modules/wowchemy/layouts/partials/blocks/slider.html) as `./layouts/partials/blocks/slider.html`. Hopefully in the future this will be part of the default Wowchemy blocks.
+2. Copy over the `_index.md` lines. 
+
+It turns out that it works great now. There were some tweaks for buttons. I'm not quite sure where these get set, but I'll just hack these by hand in `custom.scss`.
+
+
+
+**References**
+
+* [vw units](https://coderwall.com/p/hkgamw/creating-full-width-100-container-inside-fixed-width-container)
+* [#2914 pull request](https://github.com/wowchemy/wowchemy-hugo-themes/pull/2914) and see also [2919](https://github.com/Agos95/wowchemy-hugo-themes/commit/f55ff594c0f63899a8af893f33bd62ceb77cc8fd)
+
+## Students
+
+The main edits to the `fliptemplate.html` file are in the second column:
+
+```
+<div class="col-12 col-lg-8">
+  {{ $text }}
+
+  {{ with $block.mygroup }}
+    <ul class="ul-students">
+      {{ range .students }}
+        <li class="ul-students" title="{{ .name }}">
+          <a href="{{ .website }}"><img class="studentpic" src="{{ $.Site.BaseURL }}img/students/{{ .photo }}"></a>
+        </li>
+      {{ end }}
+    </ul>
+  {{ end }}
+
+  <p><span class="comment">* - co-advised,  ◊ - postdoc, † - undergraduate, ‡ - high-school, § - visiting</span></p>
+
+
+  <div class="row comment">
+    <h5>Past Students</h5>
+  </div>
+
+  {{ with $block.mygroup }}
+    {{ range .oldstudents }}
+      <div class="row comment">
+        <div class="col-xs-3">
+          <a href="{{ .website }}" class=comment>
+            {{ .name }}&nbsp;
+          </a>
+        </div>
+        <div class="col-xs-3">
+          {{ .start }} - {{ .end }}&nbsp;
+        </div>
+        <div class="col-xs-6">
+          {{ .position }}, {{ .role }}
+        </div>
+      </div>
+    {{ end }}
+  {{ end }}
+
+</div>
+```
+
+## Twitter (Social Media)
+
+This lightly edits the  `markdown` block. 
+
+```
+  <div class="col-12 col-lg-8">
+    {{ $text }}
+    <h4>Recent Press</h4>
+    {{ if $block.content.currentpress }}
+    <div>
+      {{ $block.content.currentpress | markdownify }}
+    </div>
+    {{ end }}
+
+    {{ if $block.content.olderpress }}
+    <details>
+      <summary><b>Older Press</b></summary>
+      <div>
+        {{ $block.content.olderpress | markdownify }}
+      </div>
+      {{ end }}
+    </details>
+  </div>
+```
+
+
+
+## Portfolio (Design)
+
+These are all stored in `./contents/posts/`. Actually, all of my pages are stored in that folder, not just portfolio pages. In the future I may want to branch off and make a separate folder. 
+
+Make a new template called `flip.portfolio.html`. 
+
+## Contact
+
+You can use the `contact` block, but I don't like how large the Font Awesome icons are. These, in turn, are tied to specific Wowchemy css that tunes the size of the height of the list items (`li`) to the Font Awesome 2x size.
+
+We can make our own contact template, but we need to start with `fliptemplate.html` because Wowchemy defaults to only allowing two column view for a specific set of named blocks. That is: when we rename `contact` to `flip.contact` it stops rendering properly in at least two places: (1) the wide screen two column view does not work, (2) the height of the list items fails. 
+
+You can find the css code for the list item heights in `_contact.scss`, which you can download from [Wowchemy](https://github.com/wowchemy/wowchemy-hugo-themes/tree/main/modules/wowchemy). Go to: `[downloadfolder]wowchemy-hugo-themes-main/modules/wowchemy/assets/scss/wowchemy`. The relevant chunk is here:
+
+```
+.wg-contact .fa-ul {
+  margin-left: 3.14285714rem; /* Must be > `fa-2x` icon size. */
+}
+
+.wg-contact .fa-li {
+  position: absolute;
+  left: -3.14285714rem; /* Negative of `.wg-contact .fa-ul` margin. */
+  width: 2rem; /* Match `fa-2x` icon size. */
+  top: 0.14285714em; /* Default FA value. */
+  text-align: center;
+}
+
+.wg-contact li {
+  padding-top: 0.8rem; /* Align text with bottom of `fa-2x` icon. */
+  margin-bottom: 0.3rem;
+}
+```
+
+We'll use that as a reference. 
+
+First we'll make a copy of `fliptemplate.html` (which is written to work in two-column mode) called `flip.contact` and then copy over bits and pieces from `contact.html`
+
+Be sure to copy these two initializations from `contact.html`:
+
+```
+{{ $autolink := default true $block.content.autolink }}
+{{ $data := $block.content }}
+```
+
+Here's my sloppy hack in `custom.scss`:
+
+```
+// contact, adapted from _contact.scss
+
+.fa-ul {
+  // margin-left: 3.14285714rem;
+}
+
+.fa-li {
+  position: absolute;
+  left: -3rem; /* Negative of `.wg-contact .fa-ul` margin. */
+  width: 2rem; /* Match `fa-2x` icon size. */
+  top: 0.14285714em; /* Default FA value. */
+  text-align: center;
+}
+```
+
+I hope that doesn't affect font awesome lists anywhere unexpected.
+
+There were a bunch of little tweaks, this one is kind of fun.
+
+
+
+
+
 
 
 ## "Sponsors"
 
+There's a lot of work one can do here. The sponsors are a list of graphics and widths:
 
+```
+sponsors:
+      - sponsor: bob
+        logo: logo_DOE.png
+        logowidth: 1116
+      - sponsor: bob
+        logo: logo_NSF.png
+        logowidth: 200
+      - sponsor: bob
+        logo: logo_Hellman.png
+        logowidth: 541
+    sponsorwidth: 28.57
+```
+
+`sponsorwidth` is just the sum of logo widths divided by 100, then add a little bit as a fudge factor.
 
 # OLD: FLIP IS HERE
 

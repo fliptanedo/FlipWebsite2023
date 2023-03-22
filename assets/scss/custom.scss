@@ -351,10 +351,13 @@ filter: brightness(1);
 /////////////////////
 // 2023 HACKS      //
 /////////////////////
+
+// footer
 .powered-by{
   color: #888888;
 }
 
+// for CV block button
 .btn-primary, .btn-xs{
   color: #4caf50 !important;
   border-color: #4caf50 !important;
@@ -365,3 +368,47 @@ filter: brightness(1);
   background-color: #4caf50 !important;
 }
 
+// shows up in carousel/slider
+.btn-light{ 
+  color: #4caf50 !important;
+}
+
+// for bio
+.bio-text{
+  text-align: left;
+}
+
+// sponsors
+
+.ul-sponsors li{
+  display: inline-block;
+  padding: 0;
+  padding-right: 5px;
+}
+
+.ul-sponsors img{
+  display: inline-block;
+  padding: 0;  
+  -webkit-filter: grayscale(1);
+  filter: grayscale(1);
+}
+
+ul.ul-sponsors{
+  padding: 0;  
+  padding-left: 0;
+  padding-inline-start: 0px;
+}
+
+// contact, adapted from _contact.scss
+
+.fa-ul {
+  // margin-left: 3.14285714rem;
+}
+
+.fa-li {
+  position: absolute;
+  left: -3rem; /* Negative of `.wg-contact .fa-ul` margin. */
+  width: 2rem; /* Match `fa-2x` icon size. */
+  top: 0.14285714em; /* Default FA value. */
+  text-align: center;
+}

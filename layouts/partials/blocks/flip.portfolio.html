@@ -1,0 +1,41 @@
+{{/* FLIP: new contact block */}}
+{{/* BASED ON: Wowchemy Blocks: Markdown, contact */}}
+{{/* FLIP: use this for making new 2-col blocks */}}
+{{/* Documentation: https://wowchemy.com/blocks/ */}}
+{{/* License: https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/LICENSE.md */}}
+
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $columns := $block.design.columns | default "2" }}
+{{ $text := $block.content.text | emojify | $page.RenderString }}
+
+<div class="row">
+
+    
+  <div class="section-heading col-12 col-lg-4 mb-3 mb-lg-0 d-flex flex-column align-items-center align-items-lg-start">
+    {{ with $block.content.title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+    {{ with $block.content.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+  </div>
+
+
+  <div class="col-12 col-lg-8">
+    {{ $text }}
+    <!-- NEW -->
+    <div class="row">
+    {{ with $block.portfolio }}
+          {{ range $block.portfolio }}
+            <div class="col-3 teaching">
+             <a href="{{ $.Site.BaseURL }}/post/{{ .website }}"><img class="teachingpic" src="{{ $.Site.BaseURL }}img/portfolio/{{ .photo }}"></a>
+             <a href="{{ $.Site.BaseURL }}/post/{{ .website }}">{{ .title }}</a> <br />
+             <span class="smaller">{{ .description }}</span>
+            </div>
+          {{ end }}
+        {{ end }}
+    </div>
+    <!-- /NEW -->
+  </div>
+
+
+
+</div> <!-- close row -->

@@ -1,0 +1,82 @@
+{{/* FLIP: new template block */}}
+{{/* BASED ON: Wowchemy Blocks: Markdown */}}
+{{/* Documentation: https://wowchemy.com/blocks/ */}}
+{{/* License: https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/LICENSE.md */}}
+{{/* FLIP EDITS: the default markdown block template    */}}
+{{/* has no explicit code for the left column.          */}}
+{{/* This code is hidden in pase_block.html and         */}}
+{{/* only accessible to the official blocks.            */}}
+
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+<!-- FLIP: DEFAULT SET TO 2 -->
+{{ $columns := $block.design.columns | default "2" }}
+{{ $text := $block.content.text | emojify | $page.RenderString }}
+
+<!-- FLIP EDIT: COPIED FROM parse_block_v2.html: OPEN DIV 1 -->
+<div class="row  {{if not $block.content.title | or (eq $columns "1") }}justify-content-center{{end}}">
+<!-- /FLIP EDIT -->
+
+    
+{{ if $block.content.title }}
+  {{ if eq $columns "1" }}
+    <div class="section-heading col-12 mb-3 text-center">
+      {{ with $block.content.title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+      {{ with $block.content.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+    </div>
+  {{else}}
+    <div class="section-heading col-12 col-lg-4 mb-3 mb-lg-0 d-flex flex-column align-items-center align-items-lg-start">
+      {{ with $block.content.title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+      {{ with $block.content.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+      <!-- FLIP -->
+        {{ $block.content.blurb | markdownify }}
+        <!-- /FLIP -->
+    </div>
+  {{end}}
+{{end}}
+
+<!-- /FLIP EDIT: COPIED FROM parse_block_v2.html -->
+<div class="col-12 col-lg-8">
+  <!-- FLIP: Teaching stuff -->
+  <div class="row">
+    {{ with $block }}
+      {{ range .class }}
+        <div class="col-3 teaching">
+         <a href="{{ .website }}"><img class="teachingpic" src="{{ $.Site.BaseURL }}img/teaching/{{ .photo }}"></a>
+         <a href="{{ .website }}">{{ .number }}, {{ .session }}</a> <br />
+         <span class="smaller">{{ .name }}</span>
+        </div>
+      {{ end }}
+    {{ end }}
+  </div>
+  {{ $text }}
+
+  <div class="row comment">
+    <h5>Earlier Courses</h5>
+  </div>
+
+  {{ with $block }}
+    <div class="row comment">
+    {{ range .oldclass }}
+        <div class="col-md-6">
+          <a href="{{ .website }}" class=comment>
+            {{ .name }}
+          </a>&nbsp;{{ .number }}, {{ .session }}
+        </div>
+    {{ end }}
+    {{ range .olderclass }}
+        <div class="col-md-6">
+          <a href="{{ .website }}" class=comment>
+            {{ .name }}
+          </a>&nbsp;{{ .number }}, {{ .session }}
+        </div>
+    {{ end }}
+    </div>
+  {{ end }}
+
+</div><!-- Close col-12 col-lg-8 -->
+
+<!-- FLIP EDIT: COPIED FROM parse_block_v2.html: CLOSE DIV 1 -->
+</div>
+<!-- /FLIP EDIT -->
