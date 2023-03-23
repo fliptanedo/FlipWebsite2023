@@ -13,7 +13,8 @@ sections:
       username: admin
       # Override your bio text from `authors/admin/_index.md`?
       text:
-      blurb: Flip is the first Filipino-American professor of particle physics. He runs a Physical Science book club (Phy-Sci) at his local independent book store. He enjoys swimming, basketball, and speculative fiction.
+      blurb: |-
+        Flip is the first Filipino-American professor of particle physics. He runs a [Physical Science book club](https://sites.google.com/ucr.edu/physci-book-club/) (Phy-Sci) at his local independent book store. He enjoys swimming, basketball, and speculative fiction.
 # 
   - block: flip.CV
     id: CV
@@ -99,15 +100,15 @@ sections:
       columns: '2'
 #
 # 
-  - block: markdown
-    id: contact
-    content:
-      title: Talks
-      subtitle: Recent Examples
-      text: |-
-        <iframe src="//www.slideshare.net/slideshow/embed_code/key/63oi2ZwvITPKcU" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> 
-    design:
-      columns: '2' 
+  # - block: markdown
+  #   id: talks
+  #   content:
+  #     title: Talks
+  #     subtitle: Recent Examples
+  #     text: |-
+  #       <iframe src="//www.slideshare.net/slideshow/embed_code/key/63oi2ZwvITPKcU" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> 
+  #   design:
+  #     columns: '2' 
 #
   - block: slider
     id: research-slider
@@ -547,6 +548,100 @@ sections:
     design:
       columns: '2'
 #
+  - block: slider
+    id: photo-slider
+    design:
+      slide_height: '300px; background-position:center; background-repeat: no-repeat; background-size: cover'
+      is_fullscreen: false 
+      loop: true
+      interval: 3500
+    content:
+      slides:
+        - title: ACP
+          content: Aspen Center for Physics 2019
+          credit: w/ Nirmal, Rohana, and Gopi
+          align: right
+          background:
+            position: center
+            brightness: 0.7
+            media: photos/Aspen19.jpg
+    
+        - title: UCR
+          content: theory group lunch 2019
+          credit: 
+          align: left
+          background:
+            position: center
+            brightness: 0.7
+            media: photos/group19.jpg
+    
+        - title: phy-sci
+          content: book club @ Cellar Door
+          credit: 
+          align: right
+          background:
+            position: center
+            brightness: 0.7
+            media: photos/physci.jpg
+          link:
+            icon: book
+            icon_pack: fas
+            text: phy-sci
+            url: https://sites.google.com/ucr.edu/physci-book-club/
+    
+        - title: 
+          content: 
+          credit: with Sylvain, Hai-Bo, Brian
+          align: left
+          background:
+            position: center
+            brightness: 0.7
+            media: photos/saltedpig.jpg
+    
+        - title: Tanedo
+          content: group photo 2019
+          credit: 
+          align: right
+          background:
+            position: center
+            brightness: 0.7
+            media: photos/tanedogroup19.jpg
+    
+        - title: 
+          content: 
+          credit: 
+          align: right
+          background:
+            position: center
+            brightness: 0.7
+            media: photos/swim.jpg
+    
+        - title: 
+          content: 
+          credit: 
+          align: right
+          background:
+            position: center
+            brightness: 0.7
+            media: photos/office.jpg
+    
+        - title: 
+          content: 
+          credit: 
+          align: right
+          background:
+            position: center
+            brightness: 0.7
+            media: photos/apple.jpg
+    
+        - title: 
+          content: 
+          credit: 
+          align: right
+          background:
+            position: center
+            brightness: 0.7
+            media: photos/flip_5.jpg
 #
   - block: flip.contact
     id: contact

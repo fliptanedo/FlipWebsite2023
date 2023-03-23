@@ -5,7 +5,9 @@ Hosted at  [particle.ucr.edu](https://particle.ucr.edu)
 Flip Tanedo
 March 2023
 
-See `AcademicTheme_README.md` for the Wowchemy Academic Resumé template information. Please consider [sponsoring the creator](https://github.com/sponsors/gcushen) if you use Wowchemy. I periodically re-do my personal website from scratch using the latest Academic template. Most of the material in this document copied from earlier websites. This `README.md` file is a personal reminder of how I edited the page. 
+See `AcademicTheme_README.md` for the Wowchemy Academic Resumé template information. Please consider [sponsoring the creator](https://github.com/sponsors/gcushen) if you use Wowchemy. 
+
+I periodically re-do my personal website from scratch using the latest Academic template. Most of the material in this document copied from earlier websites. This `README.md` file is a personal reminder of how I edited the page. 
 
 Old versions:  [2022](https://github.com/fliptanedo/FlipWebsite2022/blob/main/README.md) | [2021](https://github.com/fliptanedo/tanedo-website-2021/blob/master/README.md) | [2020](https://github.com/fliptanedo/flip-www-2020)
 
@@ -89,9 +91,9 @@ All home page widget data is now in `./content/_index.md`. This simplifies a few
   {{ $.Site.BaseURL }}img/portfolio/{{ .photo }}
   ```
 
-  (from my design portfolio). =
+  (from my design portfolio). 
 
-* 
+* I had to remove the "recent talks" section from my landing page (homepage). This was mainly because the `<details>` tag seems to make slideshare embeds not load properly, but anyway the whole thing was kind of clunky. I've come around to the idea of using the Wowchemy "featured publications" or "projects" block for this. It's a little more work, but ultimately I think that's what I want to do. My research slider can link to a separate page.  
 
 
 
